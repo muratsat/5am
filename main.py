@@ -1,7 +1,6 @@
 import datetime as dt
 import os
 import time
-from zoneinfo import ZoneInfo
 
 from scheduler import Scheduler
 
@@ -22,13 +21,9 @@ def scheduled_task():
 def main():
     timezone = dt.timezone(dt.timedelta(hours=6))
 
-    target_date = dt.datetime(
-        year=2025, month=4, day=18, hour=5, minute=0, tzinfo=timezone
-    )
-
     schedule = Scheduler(tzinfo=timezone)
 
-    schedule.once(target_date, scheduled_task)
+    schedule.daily(dt.time(hour=5, minute=0, tzinfo=timezone), scheduled_task)
 
     print("Starting scheduler")
     print(schedule)
